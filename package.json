@@ -1,0 +1,36 @@
+{
+    "name": "overwrite-system-logs",
+    "version": "1.0.0",
+    "description": "Library with functionality that overwrites all console methods to give a more precise format. Configuration based on winston dependency.",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "license": "ISC",
+    "scripts": {
+        "lint": "./node_modules/.bin/eslint **/*.js --rulesdir=\"./node_modules/eslint/lib/rules\" --color;exit 0",
+        "lint:fix": "./node_modules/.bin/eslint **/*.js --rulesdir=\"./node_modules/eslint/lib/rules\" --fix --color;exit 0",
+        "test": "NODE_ENV=test nyc --exclude=tests --exclude=exception --reporter=lcov --reporter=text mocha tests/**/*spec.js --reporter spec",
+        "coverage": "./node_modules/.bin/nyc report --statements 80 --functions 80 --lines 80 --branches 80 --check-coverage --reporter=text-summary --per-file;exit 0",
+        "prettier": "./node_modules/.bin/prettier **/*.js --write"
+    },
+    "author": "Vladimir Castañeda",
+    "dependencies": {
+        "lodash.isobject": "^3.0.2",
+        "winston": "^3.3.3"
+    },
+    "devDependencies": {
+        "chai": "^4.3.4",
+        "dotenv": "^10.0.0",
+        "eslint": "^7.32.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "lint-staged": "^12.1.2",
+        "mocha": "^9.1.3",
+        "nyc": "^15.1.0",
+        "prettier": "^2.5.1",
+        "prettier-eslint": "^13.0.0",
+        "winston-transport": "^4.4.1"
+    },
+    "optionalDependencies": {
+        "win-node-env": "^0.5.0"
+    }
+}

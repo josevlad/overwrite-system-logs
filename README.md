@@ -64,8 +64,9 @@ Log levels:
 - info
 - debug
 
-Ordered from most important to least important. If the value defined in LOG_LEVEL is none of these, an exception will be thrown.
+Ordered from most important to least important. If the value defined in **LOG_LEVEL** is none of these, an exception will be thrown.
 
+If you want the objects to have a pretty-print, just provide another environment variable called **LOG_PRETTY** that represents the space argument. [see documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#the_space_argument)
 
 ## Dependencias
 This logger works using as dependency the Winston library

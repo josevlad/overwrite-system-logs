@@ -7,6 +7,24 @@ const isEqual = require('lodash.isequal');
  * @param value
  * @returns {boolean}
  */
+const isNumeric = (value) => /^-?\d+$/.test(value);
+
+/**
+ *
+ * @param logPretty
+ * @returns {number|*}
+ */
+const getSpaceArgument = (logPretty) => {
+    return isNumeric(logPretty)
+        ? Number(logPretty)
+        : logPretty;
+};
+
+/**
+ *
+ * @param value
+ * @returns {boolean}
+ */
 const isEmptyWraper = (value) => {
     let typeofValue = typeof value;
     return isEqual(typeofValue, 'number')
@@ -22,7 +40,7 @@ const logPrettyJSON = (message) => {
     const { LOG_PRETTY } = process.env;
     return isEmptyWraper(LOG_PRETTY)
         ? JSON.stringify(message)
-        : JSON.stringify(message, null, LOG_PRETTY);
+        : JSON.stringify(message, null, getSpaceArgument(LOG_PRETTY));
 };
 
 /**
@@ -31,11 +49,7 @@ const logPrettyJSON = (message) => {
  * @returns {string|*}
  */
 const standardLog = (message) => {
-    const { LOG_PRETTY } = process.env;
-    const jsonStringify = isEmptyWraper(LOG_PRETTY)
-        ? JSON.stringify(message)
-        : JSON.stringify(message, null, LOG_PRETTY);
-    return isObject(message) ? jsonStringify : message;
+    return isObject(message) ? logPrettyJSON(message) : message;
 };
 
 const logMethods = {

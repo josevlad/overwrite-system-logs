@@ -15,9 +15,7 @@ const isNumeric = (value) => /^-?\d+$/.test(value);
  * @returns {number|*}
  */
 const getSpaceArgument = (logPretty) => {
-    return isNumeric(logPretty)
-        ? Number(logPretty)
-        : logPretty;
+    return isNumeric(logPretty) ? Number(logPretty) : logPretty;
 };
 
 /**
@@ -27,9 +25,7 @@ const getSpaceArgument = (logPretty) => {
  */
 const isEmptyWraper = (value) => {
     let typeofValue = typeof value;
-    return isEqual(typeofValue, 'number')
-        ? !value
-        : isEmpty(value);
+    return isEqual(typeofValue, 'number') ? !value : isEmpty(value);
 };
 
 /**
@@ -39,8 +35,29 @@ const isEmptyWraper = (value) => {
 const logPrettyJSON = (message) => {
     const { LOG_PRETTY } = process.env;
     return isEmptyWraper(LOG_PRETTY)
-        ? JSON.stringify(message)
-        : JSON.stringify(message, null, getSpaceArgument(LOG_PRETTY));
+        ? JSON.stringify(message, getCircularReplacer())
+        : JSON.stringify(
+              message,
+              getCircularReplacer(),
+              getSpaceArgument(LOG_PRETTY)
+          );
+};
+
+/**
+ *
+ * @returns {object} Analiza en objeto y lo retornar sin el error de "converting circular structure"
+ */
+const getCircularReplacer = () => {
+    const seen = new WeakSet();
+    return (key, value) => {
+        if (typeof value === 'object' && value !== null) {
+            if (seen.has(value)) {
+                return;
+            }
+            seen.add(value);
+        }
+        return value;
+    };
 };
 
 /**
